@@ -48,7 +48,7 @@ const Modal = (props) => {
          MySwal.fire({
           icon: 'success',
           title: 'Sucesso!',
-          text: 'Salvo com sucesso, a atualização será feita em até 1 hora',
+          text: 'Salvo com sucesso, a atualização será feita em horário comercial, em até 1 hora após o status mudar',
         })
  
         setIsLoading(false);
