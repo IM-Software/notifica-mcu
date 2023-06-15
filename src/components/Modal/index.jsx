@@ -12,7 +12,6 @@ import './styles.scss';
 const MySwal = withReactContent(Swal)
 
 const Modal = (props) => {
-
   const { content, fields, title, buttonTitle, name } = props.selectedItem;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,35 +36,30 @@ const Modal = (props) => {
     let response;
 
     try {
-      response = await getApiData(name, data);
-      if (response) {
-        try {
-          await verifyKey(name, data);
+      if(name === 'cartorio'){
+        response = await getApiData(name, data);
+      }
+      
+      try {
+        await verifyKey(name, data);
     
-          if (name === 'cartorio') await insertKeyCartorio(data, response.data);
+        if (name === 'cartorio') await insertKeyCartorio(data);
     
-          if (name === 'prefeitura') await insertKeyPrefeitura(data);
+        if (name === 'prefeitura') await insertKeyPrefeitura(data);
     
-          MySwal.fire({
-            icon: 'success',
-            title: 'Sucesso!',
-            text: 'Salvo com sucesso, a atualização será feita em horário comercial, em até 1 hora após o status mudar',
-          });
+        MySwal.fire({
+          icon: 'success',
+          title: 'Sucesso!',
+          text: 'Salvo com sucesso, a atualização será feita em horário comercial, em até 1 hora após o status mudar',
+        });
     
-          setIsLoading(false);
-          props.onClick();
-        } catch (err) {
-          MySwal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: err.response.data.message,
-          });
-        }
-      } else {
+        setIsLoading(false);
+        props.onClick();
+      } catch (err) {
         MySwal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Protocolo ou senha inválidos ou provedor indisponível no momento',
+          text: err.response.data.message,
         });
       }
     } catch (err) {
@@ -92,6 +86,7 @@ const Modal = (props) => {
 
       ) : (
         <>
+        <button className='close' onClick={() => props.onClick()}>X</button>
         <h2>{title}</h2>
         <span>{content}</span>
   
