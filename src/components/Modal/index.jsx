@@ -33,11 +33,9 @@ const Modal = (props) => {
    
     setIsLoading(true);
 
-    let response;
-
     try {
       if(name === 'cartorio'){
-        response = await getApiData(name, data);
+        await getApiData(name, data);
       }
       
       try {
