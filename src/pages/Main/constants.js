@@ -27,8 +27,16 @@ const CONSTANTS = {
       name: 'prefeitura',
       image: Prefeitura,
       title: 'Prefeitura de manhuaçu',
-      buttonTitle: 'Em breve',
-      isAvailable: false,
+      buttonTitle: 'Cadastrar',
+      isAvailable: true,
+      modal: {
+        title: 'Cadastro de solicitação',
+        content:
+          'Para cadastrar sua solicitação, basta preencher o formulário abaixo.',
+        fields: ['telefone', 'protocolo'],
+        buttonTitle: 'Cadastrar',
+        name: 'prefeitura',
+      }
     },
   ],
 };

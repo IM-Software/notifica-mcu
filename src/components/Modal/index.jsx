@@ -5,7 +5,7 @@ import getApiData from '../../helpers/api/getApi';
 import { Form } from '@unform/web';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { verifyKey, insertKeyCartorio } from '../../helpers/api/apiCalls';
+import { verifyKey, insertKeyCartorio, insertKeyPrefeitura } from '../../helpers/api/apiCalls';
 
 import './styles.scss';
 
@@ -38,42 +38,44 @@ const Modal = (props) => {
 
     try {
       response = await getApiData(name, data);
-      console.log(response)
-
-      try{
-         await verifyKey(data);
-
-         await insertKeyCartorio(data, response);
-
-         MySwal.fire({
-          icon: 'success',
-          title: 'Sucesso!',
-          text: 'Salvo com sucesso, a atualização será feita em horário comercial, em até 1 hora após o status mudar',
-        })
- 
-        setIsLoading(false);
-        props.onClick();
-
-      } catch (err){
+      if (response) {
+        try {
+          await verifyKey(name, data);
+    
+          if (name === 'cartorio') await insertKeyCartorio(data, response.data);
+    
+          if (name === 'prefeitura') await insertKeyPrefeitura(data);
+    
+          MySwal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: 'Salvo com sucesso, a atualização será feita em horário comercial, em até 1 hora após o status mudar',
+          });
+    
+          setIsLoading(false);
+          props.onClick();
+        } catch (err) {
+          MySwal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.message,
+          });
+        }
+      } else {
         MySwal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: err.response.data.message
-        })
+          text: 'Protocolo ou senha inválidos ou provedor indisponível no momento',
+        });
       }
-
-
-
-    }catch(err) {
-       MySwal.fire({
-         icon: 'error',
-         title: 'Oops...',
-         text: 'Protocolo ou senha inválidos ou provedor indisponível no momento',
-       })
-
+    } catch (err) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Protocolo ou senha inválidos ou provedor indisponível no momento',
+      });
       console.log(err)
     }
-
     setIsLoading(false);
   }
  
