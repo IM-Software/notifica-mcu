@@ -13,17 +13,16 @@ export const verifyKey = async (name, response) => {
   });
 };
 
-export const insertKeyCartorio = async (data, response) => {
+export const insertKeyCartorio = async (data) => {
   const { protocolo, telefone, senha } = data;
-  const { etapa } = response;
 
   await axios.post(`${uri}/register`, {
     code: protocolo,
     password: senha,
     phone: `55${telefone}`,
-    previousResponse: etapa,
+    previousResponse: '',
     isFinished: false,
-    useReason: 'cartorio',
+    useReason: 'cartorio', 
     createdAt: new Date(),
   });
 };
