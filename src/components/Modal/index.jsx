@@ -53,7 +53,7 @@ const Modal = (props) => {
         MySwal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: err.response.data.message,
+          text: err.response?.data?.message || 'Provedor indisponível no momento',
         });
       }
     } catch (err) {
