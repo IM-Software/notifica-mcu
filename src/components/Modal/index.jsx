@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import Input from '../Input';
 import ReactLoading from 'react-loading';
-import getApiData from '../../helpers/api/getApi';
 import { Form } from '@unform/web';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -34,12 +33,9 @@ const Modal = (props) => {
     setIsLoading(true);
 
     try {
-      if(name === 'cartorio'){
-        await getApiData(name, data);
-      }
+      await verifyKey(name, data);
       
       try {
-        await verifyKey(name, data);
     
         if (name === 'cartorio') await insertKeyCartorio(data);
     
@@ -64,7 +60,7 @@ const Modal = (props) => {
       MySwal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Protocolo ou senha inválidos ou provedor indisponível no momento',
+        text: err.response?.data?.message || 'Provedor indisponível no momento',
       });
       console.log(err)
     }

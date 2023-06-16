@@ -3,13 +3,14 @@ import axios from 'axios';
 const uri = process.env.REACT_APP_API;
 
 export const verifyKey = async (name, response) => {
-  const { protocolo, telefone } = response;
+  const { protocolo, telefone, senha } = response;
   const useReason = name
 
   await axios.post(`${uri}/verify`, {
     useReason,
     protocolo,
     telefone: `55${telefone}`,
+    senha
   });
 };
 
