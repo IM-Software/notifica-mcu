@@ -87,8 +87,10 @@ const Modal = (props) => {
         <div className='modal__content__fields'>
         <Form ref={formRef} onSubmit={handleFormSubmit}>
           {fields.map((field) => (
-            <div className='modal__content__fields__field'>
-               <Input name={field} placeholder={`Insira seu ${field}`} />
+            <div className='modal__content__fields__field'> 
+               <Input name={field} placeholder={
+                field === 'protocolo' && name === 'prefeitura' ? 'Insira sua chave de acesso' :  
+                `Insira seu ${field}`} />
             </div>
           ))}
             <button type="submit">{buttonTitle}</button>

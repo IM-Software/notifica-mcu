@@ -36,7 +36,7 @@ const CONSTANTS = {
         fields: ['telefone', 'protocolo'],
         buttonTitle: 'Cadastrar',
         name: 'prefeitura',
-      }
+      },
     },
   ],
 };
